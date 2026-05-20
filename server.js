@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
+import noteRoutes from "./routes/noteRoutes.js";
 
 dotenv.config({
     path : "./.env"
@@ -9,6 +10,8 @@ dotenv.config({
 const app = express();
 app.use(express.json())
 connectDB()
+
+app.use("/api", noteRoutes);
 
 const PORT = process.env.PORT || 3000;
 

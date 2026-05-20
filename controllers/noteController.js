@@ -1,4 +1,5 @@
-import { Notes } from "../models/note.js"
+import { Notes } from "../models/note.js";
+import mongoose from "mongoose";
 
 export const createNote = async (req, res) => {
     try {
@@ -82,6 +83,12 @@ export const updateNotes = async (req, res) => {
 export const deleteNote = async (req, res) => {
     try {
         const _id = req.params.id;
+        
+        if (!mongoose.Types.ObjectId.isValid(_id)) {
+            return res.status(400).json({
+                message: "Invalid MongoDB ID",
+            });
+        }
 
         const note = await Notes.findByIdAndDelete(_id);
 
